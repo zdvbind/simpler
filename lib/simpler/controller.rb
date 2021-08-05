@@ -48,7 +48,6 @@ module Simpler
 
     def render(template)
       if template.is_a?(Hash)
-        @response['Content-Type'] = 'text/plain'
         @request.env['simpler.plain_text'] = template.first[1]
       else
         @request.env['simpler.template'] = template
@@ -58,6 +57,11 @@ module Simpler
     def status(code)
       @response.status = code
     end
+
+    def headers
+      @response
+    end
+
 
   end
 end
