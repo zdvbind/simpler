@@ -62,6 +62,5 @@ module Simpler
       @response
     end
 
-
   end
 end
