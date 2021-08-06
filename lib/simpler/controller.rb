@@ -9,6 +9,7 @@ module Simpler
       @name = extract_name
       @request = Rack::Request.new(env)
       @response = Rack::Response.new
+      env['simpler.params'].each{ |k,v| @request.params[k]= v } if env['simpler.params']
     end
 
     def make_response(action)

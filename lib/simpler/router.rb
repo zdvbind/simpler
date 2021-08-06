@@ -18,11 +18,16 @@ module Simpler
     def route_for(env)
       method = env['REQUEST_METHOD'].downcase.to_sym
       path = env['PATH_INFO']
-
-      @routes.find { |route| route.match?(method, path) }
+      route = @routes.find { |route| route.match?(method, path) }
+      env['simpler.params'] = params(path) if route && route.path.match(':id')
+      route
     end
 
     private
+
+    def params(path)
+      {id: path.scan(/\w+\/\d+/)[0].split('/')[1]}
+    end
 
     def add_route(method, path, route_point)
       route_point = route_point.split('#')
